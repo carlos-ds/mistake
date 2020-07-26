@@ -1,0 +1,12 @@
+{
+  "name": "Mistaken",
+  "version": "1.0",
+  "description": "Avoid confusing your production environment with one or more tests environments when having multiple browser tabs open.",
+  "permissions": ["webNavigation", "storage"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "manifest_version": 2,
+  "options_page": "options.html"
+}
