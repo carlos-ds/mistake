@@ -7,6 +7,19 @@ window.onload = function () {
   rulesList.addEventListener("click", removeRule);
 };
 
+function getRules() {
+  try {
+    chrome.storage.sync.get(null, function (items) {
+      return items;
+    });
+  } catch (error) {
+    displayAlert(
+      "danger",
+      "Something went wrong while retrieving the existing rules. Please refresh the page and try again!"
+    );
+  }
+}
+
 function createRule() {
   const currentNumberOfRules = document.querySelectorAll(".rule").length;
 
@@ -39,8 +52,6 @@ function saveRule(rule) {
         "The rule could not be removed. Please refresh the page and try again."
       );
     }
-
-    // Disable button for 2 seconds to avoid button mashing
   }
 }
 
