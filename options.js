@@ -2,34 +2,22 @@ const buttonAddNewRule = document.getElementById("add");
 const rulesList = document.getElementById("rules");
 
 window.onload = function () {
-  const rules = getRules();
-  displayRules(rules);
-
+  chrome.storage.sync.get(null, function (syncItems) {
+    displayRules(syncItems);
+  });
   buttonAddNewRule.addEventListener("click", createRule);
   rulesList.addEventListener("click", saveRule);
   rulesList.addEventListener("click", removeRule);
 };
 
-function getRules() {
-  try {
-    chrome.storage.sync.get(null, function (items) {
-      return items;
-    });
-  } catch (error) {
-    displayAlert(
-      "danger",
-      "Something went wrong while retrieving the existing rules. Please refresh the page and try again!"
-    );
+function displayRules(rules) {
+  for (const [key, value] of Object.entries(rules)) {
+    createRule(value.ruleType);
   }
 }
 
-function displayRules(rules) {
-  // for (const [key, value] of Object.entries(rules)) {
-  //   createRule(key
-  // }
-}
-
 function createRule(type) {
+  removeActiveAlert();
   const currentNumberOfRules = document.querySelectorAll(".rule").length;
 
   const newRule = document.createElement("div");
@@ -125,11 +113,7 @@ function createDropdown(type, value) {
 }
 
 function displayAlert(type, text) {
-  const activeAlert = document.getElementsByClassName("alert");
-  if (activeAlert.length > 0) {
-    activeAlert[0].remove();
-  }
-
+  removeActiveAlert();
   const newAlert = document.createElement("div");
   newAlert.setAttribute("role", "alert");
   newAlert.innerText = text;
@@ -143,4 +127,11 @@ function displayAlert(type, text) {
   setTimeout(function () {
     newAlert.remove();
   }, 2000);
+}
+
+function removeActiveAlert() {
+  const activeAlert = document.getElementsByClassName("alert");
+  if (activeAlert.length > 0) {
+    activeAlert[0].remove();
+  }
 }
