@@ -1,5 +1,6 @@
 const buttonAddNewRule = document.getElementById("add");
 const rulesList = document.getElementById("rules");
+const ruleTypeOptions = ["URL begins with", "URL contains", "URL ends with"];
 
 window.onload = function () {
   chrome.storage.sync.get(null, function (syncItems) {
@@ -12,11 +13,11 @@ window.onload = function () {
 
 function displayRules(rules) {
   for (const [key, value] of Object.entries(rules)) {
-    createRule(value.ruleType);
+    createRule(value.ruleType, value.ruleExpression);
   }
 }
 
-function createRule(type) {
+function createRule(type, expression) {
   removeActiveAlert();
   const currentNumberOfRules = document.querySelectorAll(".rule").length;
 
@@ -24,7 +25,8 @@ function createRule(type) {
   newRule.classList.add("rule");
   newRule.setAttribute("data-index", currentNumberOfRules);
 
-  newRule.appendChild(createDropdown("rule type", type));
+  newRule.appendChild(createDropdown("ruleType", type));
+  newRule.appendChild(createInputField("ruleExpression", expression));
   newRule.appendChild(createButton("save"));
   newRule.appendChild(createButton("remove"));
 
@@ -39,15 +41,20 @@ function saveRule(rule) {
       const ruleType = rule.target.parentNode.querySelector(
         '[data-dropdown-type="ruleType"]'
       );
+      const ruleExpression = rule.target.parentNode.querySelector(
+        '[data-input-type="ruleExpression"]'
+      ).value;
 
       chrome.storage.sync.set({
         [ruleKey]: {
           // Set rule type as a value from the global ruleTypeOptions array
           ruleType: ruleTypeOptions[ruleType.value],
+          ruleExpression: ruleExpression,
         },
       });
       displayAlert("success", "The rule was successfully saved!");
     } catch (error) {
+      console.log(error);
       displayAlert(
         "danger",
         "The rule could not be saved. Please refresh the page and try again."
@@ -55,8 +62,6 @@ function saveRule(rule) {
     }
   }
 }
-
-// To clear all existing items from storage: chrome.storage.sync.clear()
 
 function removeRule(rule) {
   if (rule.target.getAttribute("data-action") === "remove") {
@@ -70,6 +75,37 @@ function removeRule(rule) {
         "The rule could not be removed. Please refresh the page and try again."
       );
     }
+  }
+}
+
+function createDropdown(type, value) {
+  if (type === "ruleType") {
+    const ruleTypeDropdown = document.createElement("select");
+    ruleTypeDropdown.setAttribute("data-dropdown-type", "ruleType");
+
+    // Create dropdown options based on global ruleTypeOptions array
+    for (i = 0; i < ruleTypeOptions.length; i++) {
+      const ruleTypeOption = document.createElement("option");
+      ruleTypeOption.setAttribute("value", i);
+      if (value === ruleTypeOptions[i]) {
+        ruleTypeOption.setAttribute("selected", "selected");
+      }
+      ruleTypeOption.innerText = ruleTypeOptions[i];
+      ruleTypeDropdown.appendChild(ruleTypeOption);
+    }
+    return ruleTypeDropdown;
+  }
+}
+
+function createInputField(type, expression) {
+  if (type === "ruleExpression") {
+    const input = document.createElement("input");
+    input.setAttribute("type", "text");
+    input.setAttribute("minlength", 1);
+    input.setAttribute("maxlength", 255);
+    input.setAttribute("data-input-type", "ruleExpression");
+    input.value = expression;
+    return input;
   }
 }
 
@@ -88,27 +124,6 @@ function createButton(type) {
     removeButton.classList.add("btn", "btn-danger");
     removeButton.setAttribute("data-action", "remove");
     return removeButton;
-  }
-}
-
-const ruleTypeOptions = ["URL begins with", "URL contains", "URL ends with"];
-
-function createDropdown(type, value) {
-  if (type === "rule type") {
-    const ruleTypeDropdown = document.createElement("select");
-    ruleTypeDropdown.setAttribute("data-dropdown-type", "ruleType");
-
-    // Create dropdown options based on global ruleTypeOptions array
-    for (i = 0; i < ruleTypeOptions.length; i++) {
-      const ruleTypeOption = document.createElement("option");
-      ruleTypeOption.setAttribute("value", i);
-      if (value === ruleTypeOptions[i]) {
-        ruleTypeOption.setAttribute("selected", "selected");
-      }
-      ruleTypeOption.innerText = ruleTypeOptions[i];
-      ruleTypeDropdown.appendChild(ruleTypeOption);
-    }
-    return ruleTypeDropdown;
   }
 }
 
