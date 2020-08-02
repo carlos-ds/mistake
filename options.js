@@ -47,7 +47,7 @@ function saveRule(rule) {
       chrome.storage.sync.set({
         [ruleKey]: {
           // Set rule type as a value from the global ruleTypeOptions array
-          ruleType: config.ruleTypeOptions[ruleType.value],
+          ruleType: ruleTypeOptions[ruleType.value],
           ruleExpression: ruleExpression,
         },
       });
