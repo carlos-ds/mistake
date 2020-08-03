@@ -24,7 +24,13 @@ function createInputField(type, expression) {
     input.setAttribute("minlength", 1);
     input.setAttribute("maxlength", 255);
     input.setAttribute("data-input-type", "ruleExpression");
-    input.value = expression;
+    input.setAttribute("placeholder", "https://www.example.com");
+    if (expression) {
+      input.value = expression;
+    } else {
+      input.value = "";
+    }
+
     return input;
   }
 }
