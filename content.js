@@ -1,14 +1,18 @@
 window.onload = function () {
   chrome.storage.sync.get(null, function (items) {
     Object.values(items).forEach(function (item) {
-      console.log(window.location.href);
-      console.log(item);
       if (
         item.ruleType === "URL begins with" &&
         urlBeginsWith(window.location.href, item.ruleExpression)
       ) {
-        document.body.prepend(createMessage());
-        console.log("message was sent to front-end");
+        document.body.prepend(
+          createMessage(
+            item.font,
+            item.text,
+            item.textColor,
+            item.backgroundColor
+          )
+        );
       }
     });
   });
@@ -19,8 +23,11 @@ function urlBeginsWith(url, expression) {
   return regex.test(url);
 }
 
-function createMessage(text, color) {
+function createMessage(font, text, textColor, backgroundColor) {
   const paragraph = document.createElement("p");
-  paragraph.innerText = "test";
+  paragraph.style.backgroundColor = backgroundColor;
+  paragraph.style.color = textColor;
+  paragraph.style.fontFamily = font;
+  paragraph.innerText = text;
   return paragraph;
 }
