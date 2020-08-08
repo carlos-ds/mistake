@@ -65,6 +65,9 @@ function saveRule(rule) {
 function removeRule(rule) {
   if (rule.target.getAttribute("data-action") === "remove") {
     try {
+      chrome.storage.sync.remove(
+        "rule" + rule.target.parentNode.getAttribute("data-index")
+      );
       rule.target.parentNode.remove();
       displayAlert("success", "The rule was successfully removed!");
     } catch (error) {

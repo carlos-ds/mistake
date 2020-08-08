@@ -1,25 +1,22 @@
 window.onload = function () {
   chrome.storage.sync.get(null, function (items) {
-    for (const value in Object.values(items)) {
+    Object.values(items).forEach(function (item) {
+      console.log(window.location.href);
+      console.log(item);
       if (
-        value.ruleType === "URL begins with" &&
-        urlBeginsWith(window.location.href, value.ruleExpression)
+        item.ruleType === "URL begins with" &&
+        urlBeginsWith(window.location.href, item.ruleExpression)
       ) {
         document.body.prepend(createMessage());
+        console.log("message was sent to front-end");
       }
-    }
+    });
   });
 };
 
 function urlBeginsWith(url, expression) {
-  const regularExpression = new RegExp(removeProtocol(expression) + ".*");
-  return removeProtocol(url).match(regularExpression);
-}
-
-// https://stackoverflow.com/questions/3999764/taking-off-the-http-or-https-off-a-javascript-string
-function removeProtocol(url) {
-  const urlNoProtocol = url.replace(/^https?\:\/\//i, "");
-  return urlNoProtocol;
+  const regex = new RegExp(expression + ".*");
+  return regex.test(url);
 }
 
 function createMessage(text, color) {
