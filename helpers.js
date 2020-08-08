@@ -4,13 +4,13 @@ function createDropdown(type, value) {
     ruleTypeDropdown.setAttribute("data-dropdown-type", "ruleType");
 
     // Create dropdown options based on global ruleTypeOptions array
-    for (i = 0; i < ruleTypeOptions.length; i++) {
+    for (i = 0; i < RULE_TYPE_OPTIONS.length; i++) {
       const ruleTypeOption = document.createElement("option");
       ruleTypeOption.setAttribute("value", i);
-      if (value === ruleTypeOptions[i]) {
+      if (value === RULE_TYPE_OPTIONS[i]) {
         ruleTypeOption.setAttribute("selected", "selected");
       }
-      ruleTypeOption.innerText = ruleTypeOptions[i];
+      ruleTypeOption.innerText = RULE_TYPE_OPTIONS[i];
       ruleTypeDropdown.appendChild(ruleTypeOption);
     }
     return ruleTypeDropdown;
