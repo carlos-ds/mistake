@@ -2,7 +2,15 @@
   "name": "Mistaken",
   "version": "1.0",
   "description": "Avoid confusing your production environment with one or more tests environments when having multiple browser tabs open.",
-  "permissions": ["webNavigation", "storage", "activeTab"],
+  "permissions": [
+    "webNavigation",
+    "storage",
+    "activeTab",
+    "./bootstrap/bootstrap.min.css",
+    "./bootstrap/bootstrap.min.js",
+    "./bootstrap/jquery-3.5.1.slim.min.js",
+    "./bootstrap/popper.min.js"
+  ],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
