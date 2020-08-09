@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "layout_dev": "browser-sync start --server --files \"test/*.html\" --browser \"chrome\""
   },
   "keywords": [],
   "author": "",
