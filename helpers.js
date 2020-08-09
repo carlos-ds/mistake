@@ -1,7 +1,7 @@
-function createButtonGroup(type, value) {
+function createDropdown(type, value) {
   if (type === "ruleType") {
-    const ruleTypeButtonGroup = document.createElement("select");
-    ruleTypeButtonGroup.setAttribute("data-dropdown-type", "ruleType");
+    const ruleTypeDropdown = document.createElement("select");
+    ruleTypeDropdown.setAttribute("data-dropdown-type", "ruleType");
 
     // Create dropdown options based on RULE_TYPE_OPTIONS array
     for (i = 0; i < RULE_TYPE_OPTIONS.length; i++) {
@@ -11,9 +11,9 @@ function createButtonGroup(type, value) {
         ruleTypeOption.setAttribute("selected", "selected");
       }
       ruleTypeOption.innerText = RULE_TYPE_OPTIONS[i];
-      ruleTypeButtonGroup.appendChild(ruleTypeOption);
+      ruleTypeDropdown.appendChild(ruleTypeOption);
     }
-    return ruleTypeButtonGroup;
+    return ruleTypeDropdown;
   }
 }
 
