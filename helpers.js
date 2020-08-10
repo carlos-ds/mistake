@@ -90,11 +90,12 @@ function createColorInput(colorType, color) {
   const label = document.createElement("label");
   if (colorType === "textColor") {
     label.setAttribute("for", "textColor");
+    label.innerText = "Text color:";
   }
   if (colorType === "backgroundColor") {
     label.setAttribute("for", "backgroundColor");
+    label.innerText = "Background color:";
   }
-  label.innerText = "Text color:";
 
   const input = document.createElement("input");
   if (colorType === "textColor") {
