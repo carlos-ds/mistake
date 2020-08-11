@@ -71,26 +71,31 @@ function saveRule(rule) {
       const ruleKey =
         "rule" +
         rule.target.parentNode.parentNode.parentNode.getAttribute("data-index");
-      const ruleType = rule.target.parentNode.querySelector(
-        '[checked="checked"]'
+      const ruleTypeArray = rule.target.parentNode.getElementsByClassName(
+        "active"
       );
+      if (ruleTypeArray.length !== 1) {
+        throw new Error(
+          "One and only one rule type should be selected. Please refresh the page and try again."
+        );
+      }
+      const ruleType = ruleTypeArray[0].textContent;
       const ruleExpression = rule.target.parentNode.querySelector(
         '[data-input="ruleExpression"]'
       ).value;
       const message = rule.target.parentNode.querySelector(
         '[data-input="message"]'
-      );
+      ).value;
       const textColor = rule.target.parentNode.querySelector(
         '[data-input="textColor"]'
-      );
+      ).value;
       const backgroundColor = rule.target.parentNode.querySelector(
         '[data-input="backgroundColor"]'
-      );
+      ).value;
 
       chrome.storage.sync.set({
         [ruleKey]: {
-          // Set rule type as a value from the global RULE_TYPE_OPTIONS in config.js
-          ruleType: RULE_TYPE_OPTIONS[ruleType.value],
+          ruleType,
           ruleExpression,
           message,
           textColor,

@@ -45,6 +45,7 @@ function createExpressionInput(expression) {
   input.setAttribute("aria-label", "URL");
   input.setAttribute("minlength", "1");
   input.setAttribute("maxlength", "255");
+  input.setAttribute("data-input", "ruleExpression");
   if (expression) {
     input.value = expression;
   }
@@ -74,6 +75,7 @@ function createMessageInput(message) {
   input.setAttribute("minlength", "1");
   input.setAttribute("maxlength", "255");
   input.setAttribute("aria-label", "Message");
+  input.setAttribute("data-input", "message");
   if (message) {
     input.value = message;
   }
@@ -99,10 +101,10 @@ function createColorInput(colorType, color) {
 
   const input = document.createElement("input");
   if (colorType === "textColor") {
-    input.setAttribute("id", "textColor");
+    input.setAttribute("data-input", "textColor");
   }
   if (colorType === "backgroundColor") {
-    input.setAttribute("id", "backgroundColor");
+    input.setAttribute("data-input", "backgroundColor");
   }
   input.setAttribute("type", "color");
   input.setAttribute("aria-label", "Background color");
