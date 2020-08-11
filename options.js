@@ -2,13 +2,17 @@ const buttonAddNewRule = document.getElementById("add");
 const rulesList = document.getElementById("rules");
 
 window.onload = function () {
-  chrome.storage.sync.get(null, function (syncItems) {
-    displayRules(syncItems);
-  });
+  initializeRules();
   buttonAddNewRule.addEventListener("click", createRule);
   rulesList.addEventListener("click", saveRule);
   rulesList.addEventListener("click", removeRule);
 };
+
+function initializeRules() {
+  chrome.storage.sync.get(null, function (syncItems) {
+    displayRules(syncItems);
+  });
+}
 
 function displayRules(rules) {
   for (const value of Object.values(rules)) {
@@ -24,34 +28,32 @@ function displayRules(rules) {
 
 function createRule(type, expression, message, textColor, backgroundColor) {
   removeActiveAlert();
-  const currentNumberOfRules = parseInt(
-    document.querySelectorAll(".rule").length,
-    10
-  );
 
   const newRule = document.createElement("div");
   newRule.classList.add("rule", "pt-3");
-  newRule.setAttribute("data-index", currentNumberOfRules);
+  newRule.setAttribute("data-index", getCurrentNumberOfRules());
 
   const toggleButton = document.createElement("button");
   toggleButton.classList.add("btn", "btn-light");
   toggleButton.setAttribute("type", "button");
   toggleButton.setAttribute("data-toggle", "collapse");
-  toggleButton.setAttribute("data-target", "#collapse" + currentNumberOfRules);
+  toggleButton.setAttribute("data-target", "#collapse" + getCurrentNumberOfRules());
   toggleButton.setAttribute("aria-expanded", "false");
-  toggleButton.setAttribute("aria-controls", "collapse" + currentNumberOfRules);
-  toggleButton.innerHTML = `Rule ${
-    currentNumberOfRules + 1
-  } - ${type} "${expression}" &darr;`;
+  toggleButton.setAttribute("aria-controls", "collapse" + getCurrentNumberOfRules());
+  if (!type || !expression) { 
+    toggleButton.innerText = "New rule (unsaved)";
+  } else { 
+    toggleButton.innerHTML = `${type} "${expression}" &darr;`;
+  }
 
   const collapseDiv = document.createElement("div");
   collapseDiv.classList.add("collapse", "show", "mb-5");
-  collapseDiv.setAttribute("id", "collapse" + currentNumberOfRules);
+  collapseDiv.setAttribute("id", "collapse" + getCurrentNumberOfRules());
 
   const card = document.createElement("div");
   card.classList.add("card", "card-body");
 
-  card.appendChild(createRuleTypeButtonGroup(type));
+  card.appendChild(createTypeButtonGroup(type));
   card.appendChild(createExpressionInput(expression));
   card.appendChild(createMessageInput(message));
   card.appendChild(createColorInput("textColor", textColor));
@@ -68,40 +70,33 @@ function createRule(type, expression, message, textColor, backgroundColor) {
 function saveRule(rule) {
   if (rule.target.getAttribute("data-action") === "save") {
     try {
-      const ruleKey =
-        "rule" +
-        rule.target.parentNode.parentNode.parentNode.getAttribute("data-index");
-      const ruleTypeArray = rule.target.parentNode.getElementsByClassName(
-        "active"
-      );
-      if (ruleTypeArray.length !== 1) {
+      const ruleTargetParent = rule.target.parentNode;
+      const ruleIndex = ruleTargetParent.parentNode.parentNode.getAttribute("data-index");
+      const typeArray = ruleTargetParent.getElementsByClassName("active");
+      if (typeArray.length !== 1) {
         throw new Error(
           "One and only one rule type should be selected. Please refresh the page and try again."
         );
       }
-      const ruleType = ruleTypeArray[0].textContent;
-      const ruleExpression = rule.target.parentNode.querySelector(
-        '[data-input="ruleExpression"]'
-      ).value;
-      const message = rule.target.parentNode.querySelector(
-        '[data-input="message"]'
-      ).value;
-      const textColor = rule.target.parentNode.querySelector(
-        '[data-input="textColor"]'
-      ).value;
-      const backgroundColor = rule.target.parentNode.querySelector(
-        '[data-input="backgroundColor"]'
-      ).value;
+      const type = typeArray[0].textContent;
+      const expression = ruleTargetParent.querySelector('[data-input="expression"]').value;
+      const message = ruleTargetParent.querySelector('[data-input="message"]').value;
+      const textColor = ruleTargetParent.querySelector('[data-input="textColor"]').value;
+      const backgroundColor = ruleTargetParent.querySelector('[data-input="backgroundColor"]').value;
 
       chrome.storage.sync.set({
-        [ruleKey]: {
-          ruleType,
-          ruleExpression,
+        [ruleIndex]: {
+          type,
+          expression,
           message,
           textColor,
           backgroundColor,
         },
       });
+
+      const toggleButton = ruleTargetParent.parentNode.parentNode.querySelector('[data-toggle="collapse"]');
+      toggleButton.innerHTML = `${type} "${expression}" &darr;`;
+
       displayAlert("success", "The rule was successfully saved!");
     } catch (error) {
       console.log(error);
@@ -116,10 +111,9 @@ function saveRule(rule) {
 function removeRule(rule) {
   if (rule.target.getAttribute("data-action") === "remove") {
     try {
-      chrome.storage.sync.remove(
-        "rule" + rule.target.parentNode.getAttribute("data-index")
-      );
-      rule.target.parentNode.remove();
+      const ruleNode = rule.target.parentNode.parentNode.parentNode;
+      chrome.storage.sync.remove(ruleNode.getAttribute("data-index"));
+      ruleNode.remove();
       displayAlert("success", "The rule was successfully removed!");
     } catch (error) {
       console.log(error);

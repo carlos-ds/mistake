@@ -1,29 +1,29 @@
-function createRuleTypeButtonGroup(value) {
-  const ruleTypeButtonGroup = document.createElement("div");
-  ruleTypeButtonGroup.classList.add("btn-group", "btn-group-toggle", "mb-3");
-  ruleTypeButtonGroup.setAttribute("data-toggle", "buttons");
-  ruleTypeButtonGroup.setAttribute("data-purpose", "ruleType");
+function createTypeButtonGroup(value) {
+  const typeButtonGroup = document.createElement("div");
+  typeButtonGroup.classList.add("btn-group", "btn-group-toggle", "mb-3");
+  typeButtonGroup.setAttribute("data-toggle", "buttons");
+  typeButtonGroup.setAttribute("data-purpose", "type");
 
   // Create dropdown options based on RULE_TYPE_OPTIONS array
   for (i = 0; i < RULE_TYPE_OPTIONS.length; i++) {
-    const ruleTypeOptionLabel = document.createElement("label");
-    ruleTypeOptionLabel.classList.add("btn", "btn-secondary");
-    ruleTypeOptionLabel.textContent = RULE_TYPE_OPTIONS[i];
+    const typeOptionLabel = document.createElement("label");
+    typeOptionLabel.classList.add("btn", "btn-secondary");
+    typeOptionLabel.textContent = RULE_TYPE_OPTIONS[i];
 
-    const ruleTypeOptionInput = document.createElement("input");
-    ruleTypeOptionInput.setAttribute("type", "radio");
-    ruleTypeOptionInput.setAttribute("name", "options");
-    ruleTypeOptionInput.setAttribute("id", "option" + (i + 1));
+    const typeOptionInput = document.createElement("input");
+    typeOptionInput.setAttribute("type", "radio");
+    typeOptionInput.setAttribute("name", "options");
+    typeOptionInput.setAttribute("id", "option" + (i + 1));
 
     if (value === RULE_TYPE_OPTIONS[i]) {
-      ruleTypeOptionInput.checked = true;
-      ruleTypeOptionLabel.classList.add("active");
+      typeOptionInput.checked = true;
+      typeOptionLabel.classList.add("active");
     }
 
-    ruleTypeOptionLabel.appendChild(ruleTypeOptionInput);
-    ruleTypeButtonGroup.appendChild(ruleTypeOptionLabel);
+    typeOptionLabel.appendChild(typeOptionInput);
+    typeButtonGroup.appendChild(typeOptionLabel);
   }
-  return ruleTypeButtonGroup;
+  return typeButtonGroup;
 }
 
 function createExpressionInput(expression) {
@@ -45,7 +45,7 @@ function createExpressionInput(expression) {
   input.setAttribute("aria-label", "URL");
   input.setAttribute("minlength", "1");
   input.setAttribute("maxlength", "255");
-  input.setAttribute("data-input", "ruleExpression");
+  input.setAttribute("data-input", "expression");
   if (expression) {
     input.value = expression;
   }
@@ -90,25 +90,24 @@ function createColorInput(colorType, color) {
   div.classList.add("mb-3");
 
   const label = document.createElement("label");
+  const input = document.createElement("input");
+  input.setAttribute("type", "color");
+  input.setAttribute("width", "50");
+
   if (colorType === "textColor") {
     label.setAttribute("for", "textColor");
     label.innerText = "Text color:";
+    input.setAttribute("data-input", "textColor");
+    input.setAttribute("aria-label", "Text color");
+    input.defaultValue = DEFAULT_TEXT_COLOR;
   }
   if (colorType === "backgroundColor") {
     label.setAttribute("for", "backgroundColor");
     label.innerText = "Background color:";
-  }
-
-  const input = document.createElement("input");
-  if (colorType === "textColor") {
-    input.setAttribute("data-input", "textColor");
-  }
-  if (colorType === "backgroundColor") {
     input.setAttribute("data-input", "backgroundColor");
+    input.setAttribute("aria-label", "Background color");
+    input.defaultValue = DEFAULT_BACKGROUND_COLOR;
   }
-  input.setAttribute("type", "color");
-  input.setAttribute("aria-label", "Background color");
-  input.setAttribute("width", "50");
   if (color) {
     input.value = color;
   }
@@ -122,7 +121,7 @@ function createButton(type) {
   if (type === "save") {
     const saveButton = document.createElement("button");
     saveButton.innerText = "Save";
-    saveButton.classList.add("btn", "btn-primary", "mb-3");
+    saveButton.classList.add("btn", "btn-primary", "mb-3", "mt-3");
     saveButton.setAttribute("data-action", "save");
     return saveButton;
   }
@@ -131,7 +130,7 @@ function createButton(type) {
     const removeButton = document.createElement("button");
     removeButton.innerText = "Remove";
     removeButton.classList.add("btn", "btn-danger", "mb-3");
-    removeButton.setAttribute("data-action", "remove");
+    removeButton.setAttribute("data-action", "remove", "mt-3");
     return removeButton;
   }
 }
@@ -158,4 +157,8 @@ function removeActiveAlert() {
   if (activeAlert.length > 0) {
     activeAlert[0].remove();
   }
+}
+
+function getCurrentNumberOfRules() {
+  return parseInt(document.querySelectorAll(".rule").length, 10);
 }
