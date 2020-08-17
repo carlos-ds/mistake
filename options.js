@@ -17,8 +17,8 @@ function initializeRules() {
 function displayRules(rules) {
   for (const value of Object.values(rules)) {
     createRule(
-      value.ruleType,
-      value.ruleExpression,
+      value.type,
+      value.expression,
       value.message,
       value.textColor,
       value.backgroundColor

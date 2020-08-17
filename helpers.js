@@ -35,13 +35,13 @@ function createExpressionInput(expression) {
 
   const inputGroupText = document.createElement("span");
   inputGroupText.classList.add("input-group-text");
-  inputGroupText.innerText = "https://";
+  inputGroupText.innerText = "String:";
   inputGroupPrepend.appendChild(inputGroupText);
 
   const input = document.createElement("input");
   input.setAttribute("type", "text");
   input.setAttribute("class", "form-control");
-  input.setAttribute("placeholder", "www.example.com");
+  input.setAttribute("placeholder", "https://www.example.com");
   input.setAttribute("aria-label", "URL");
   input.setAttribute("minlength", "1");
   input.setAttribute("maxlength", "255");
