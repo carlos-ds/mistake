@@ -1,7 +1,7 @@
 {
-  "name": "Mistaken",
+  "name": "Mistake",
   "version": "1.0",
-  "description": "Avoid confusing your production environment with one or more tests environments when having multiple browser tabs open.",
+  "description": "Avoid disaster in production by displaying a message on pages that meet the criteria you define.",
   "permissions": ["webNavigation", "storage", "activeTab"],
   "content_scripts": [
     {

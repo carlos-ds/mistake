@@ -24,13 +24,33 @@
         border-bottom: none;
       }
 
-      .btn-light {
+      button[data-toggle="collapse"] {
         border: none;
         background-color: #fff;
         margin-bottom: 1rem;
         color: black;
         display:block; 
         outline: none;
+        font-weight: 600; 
+        font-size: 1.5rem;
+      }
+
+      button[data-toggle="collapse"]:hover, 
+      button[data-toggle="collapse"]:visited, 
+      button[data-toggle="collapse"]:active,
+      button[data-toggle="collapse"]:focus {
+        background-color: unset !important;
+        color: unset !important;
+        border: none;
+        outline: 0 !important;
+        outline-offset: 0  !important;
+        background-image: none  !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none  !important;
+      }
+
+      .btn-light:focus, .btn-light.focus {
+        box-shadow: 0;
       }
 
       input[type="color"] {
