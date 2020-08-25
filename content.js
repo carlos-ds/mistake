@@ -1,7 +1,5 @@
 chrome.storage.sync.get(null, function (items) {
-  console.log("getting items from sync");
   Object.values(items).forEach(function (item) {
-    console.log(item);
     const ruleType = item.type;
     const url = window.location.href;
     const expression = item.expression;
