@@ -4,8 +4,7 @@ Display a custom message at the top of any webpage that meets the criteria you d
 
 ## Why would I want to do such a thing?
 
-Have you ever worked having **multiple tabs of the same application** open, but in **different environments**? Then you know how easy it is to live everyone's worst nightmare: screwing things up in production.</p>
-After yet another near miss, I decided to take matters into my own hands and design this plug-in. Now, when I'm in production, at least I'm significantly reducing the odds of making a _Mistake_.
+Have you ever worked having **multiple tabs of the same application** open, but in **different environments**? Then you know how easy it is to live everyone's worst nightmare: screwing things up in production.</p> After yet another near miss, I decided to take matters into my own hands and design this plug-in. Now, when I'm in production, at least I'm significantly reducing the odds of making a _Mistake_.
 
 ## Installation
 
@@ -18,10 +17,8 @@ After yet another near miss, I decided to take matters into my own hands and des
 
 ## How does it work?
 
-When you add a new rule to the options page and save, the details of that rule are saved to local sync storage.
-Sync storage means you can also access any saved rules on any other Chrome browser which you are logged into.
+When you add a new rule to the options page and save, the details of that rule are saved to local sync storage. Sync storage means you can also access any saved rules on any other Chrome browser which you are logged into.
 
-When you navigate to a new page in any tab, the extension will check if the URL matches with one of the rules that you have saved.
-If it does, your message is prepended to the body tag.
+When you navigate to a new page in any tab, the extension will check if the URL matches with one of the rules that you have saved. If it does, your message is prepended to the body tag.
 
 Learn more about Chrome extensions at https://developer.chrome.com/home.

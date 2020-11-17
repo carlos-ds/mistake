@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Mistake - Options</title>
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
     <style>
       h2 {
         margin: 2rem 0;
@@ -31,27 +31,28 @@
         margin-top: 2rem;
         margin-bottom: 1rem;
         color: black;
-        display:block; 
+        display: block;
         outline: none;
-        font-weight: 600; 
+        font-weight: 600;
         font-size: 1.5rem;
       }
 
-      button[data-toggle="collapse"]:hover, 
-      button[data-toggle="collapse"]:visited, 
+      button[data-toggle="collapse"]:hover,
+      button[data-toggle="collapse"]:visited,
       button[data-toggle="collapse"]:active,
       button[data-toggle="collapse"]:focus {
         background-color: unset !important;
         color: unset !important;
         border: none;
         outline: 0 !important;
-        outline-offset: 0  !important;
-        background-image: none  !important;
+        outline-offset: 0 !important;
+        background-image: none !important;
         -webkit-box-shadow: none !important;
-        box-shadow: none  !important;
+        box-shadow: none !important;
       }
 
-      .btn-light:focus, .btn-light.focus {
+      .btn-light:focus,
+      .btn-light.focus {
         box-shadow: 0;
       }
 
@@ -66,30 +67,30 @@
       }
 
       input[type="color"]::-webkit-color-swatch-wrapper {
-        padding: 0;	
+        padding: 0;
       }
 
       input[type="color"]::-webkit-color-swatch {
         border-radius: 50%;
-      } 
+      }
     </style>
   </head>
-  <body style="padding-top: 5rem;">
+  <body style="padding-top: 5rem">
     <div class="container">
       <h2>What does Mistake do?</h2>
-      <p>Display a custom message at the top of any webpage that meets the criteria you define.</p>
+      <p>Display a custom message at the bottom (fixed position) of any webpage that meets the criteria you define.</p>
       <h2>Why would I want to do such a thing?</h2>
       <p>Have you ever worked having <strong>multiple tabs of the same application</strong> open, but in <strong>different environments</strong>? Then you know how easy it is to live everyone's worst nightmare: screwing things up in production.</p>
       <p>After yet another near miss, I decided to take matters into my own hands and design this plug-in. Now, when I'm in production, at least I'm significantly reducing the odds of making a <i>Mistake</i>.</p>
       <h2>How does it work?</h2>
-      <p>Start by adding a new rule using the button below. Add as many rules as you like.<br/>
-      Now, whenever you open a tab with the URL that matches the pattern, your message will be displayed. Et voila!</p>
+      <p>
+        Start by adding a new rule using the button below. Add as many rules as you like.<br />
+        Now, whenever you open a tab with the URL that matches the pattern, your message will be displayed. Et voila!
+      </p>
 
-      <button type="button" class="btn btn-primary" id="add">
-        Add a new rule
-      </button>
-      
-      <div id="rules" style="padding-top: 20px;"></div>
+      <button type="button" class="btn btn-primary" id="add">Add a new rule</button>
+
+      <div id="rules" style="padding-top: 20px"></div>
     </div>
 
     <script src="./js/jquery-3.5.1.slim.min.js"></script>
