@@ -2,7 +2,7 @@
   "name": "Mistake",
   "version": "1.0",
   "description": "Avoid disaster in production by displaying a message on pages that meet the criteria you define.",
-  "permissions": ["webNavigation", "storage", "activeTab"],
+  "permissions": ["webNavigation", "storage"],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
