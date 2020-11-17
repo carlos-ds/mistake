@@ -3,19 +3,8 @@ chrome.storage.sync.get(null, function (items) {
     const ruleType = item.type;
     const url = window.location.href;
     const expression = item.expression;
-    if (
-      (ruleType === "URL begins with" && urlBeginsWith(url, expression)) ||
-      (ruleType === "URL contains" && urlContains(url, expression)) ||
-      (ruleType === "URL ends with" && urlEndsWith(url, expression))
-    ) {
-      document.body.prepend(
-        createMessage(
-          item.font,
-          item.message,
-          item.textColor,
-          item.backgroundColor
-        )
-      );
+    if ((ruleType === "URL begins with" && urlBeginsWith(url, expression)) || (ruleType === "URL contains" && urlContains(url, expression)) || (ruleType === "URL ends with" && urlEndsWith(url, expression))) {
+      document.body.prepend(createMessage(item.font, item.message, item.textColor, item.backgroundColor));
     }
   });
 });
@@ -41,9 +30,13 @@ function createMessage(font, text, textColor, backgroundColor) {
   paragraph.style.color = textColor;
   paragraph.style.fontFamily = font;
   paragraph.style.textAlign = "center";
-  paragraph.style.padding = "1rem 0";
+  paragraph.style.padding = "1rem";
+  paragraph.style.position = "fixed";
+  paragraph.style.bottom = "0";
+  paragraph.style.left = "0";
+  paragraph.style.width = "100%";
   paragraph.style.fontFamily = "Arial,Helvetica,sans-serif";
-  paragraph.style.margin = "0 0 1rem 0";
+  paragraph.style.margin = "0";
   paragraph.innerText = text;
   return paragraph;
 }
