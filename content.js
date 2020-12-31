@@ -32,6 +32,7 @@ function createMessage(font, text, textColor, backgroundColor) {
   paragraph.style.textAlign = "center";
   paragraph.style.padding = "1rem";
   paragraph.style.position = "fixed";
+  paragraph.style.zIndex = 9999;
   paragraph.style.bottom = "0";
   paragraph.style.left = "0";
   paragraph.style.width = "100%";
